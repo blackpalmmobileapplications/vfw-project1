@@ -75,3 +75,46 @@
 			else if (cat == "Miscellaneous")
 				targetArray = miscellaneous;
 			
+			
+			if ( el('name').value == "" || el('quantity').value == "" || el('comments').value == "" )
+				alert('All fields are required!');
+			else if ( targetArray.indexOf(el('name').value.toLowerCase()) == -1 ) {
+				option = confirm("Err..the item you entered doesn't seem like one required for a camping trip. Add it anyway?");
+				if (option == true)
+					update();
+			}
+			else update();
+		}
+	</script>
+</head>
+<body>
+	<header>
+		<h1>ListCheck</h1>
+		<p>This app enables you to make sure that you're taking every single item required on a camping check-list.</p>
+	</header>
+	<form action="#">
+		<fieldset>
+		<!-- Reqs:  fieldset & legend -->
+			<legend>Add Item</legend>
+			<label for="category">Select Cateogory</label>
+			<select name="category" id="category">
+				<option value="Shelter">Shelter</option>
+				<option value="Bedding">Bedding</option>
+				<option value="Cooking">Cooking</option>
+				<option value="Clothing">Clothing</option>
+				<option value="First Aid">First Aid</option>
+				<option value="Miscellaneous">Miscellaneous</option>
+			</select><br />
+			<label for="name">Name: </label><input type="text" name="name" id="name" /><br />
+			<label for="quantity">Quantity </label><input type="range" name="quantity" id="quantity" min="1" max="10" value="1" /><br />
+			<label for="comments">Comments: </label><textarea name="comments" id="comments" cols="30" rows="10"></textarea><br />
+			<input type="button" value="Add Item!" onclick="validate();" />
+		</fieldset>
+	</form>
+	
+	<div id="listbox">
+		
+	</div>
+	
+</body>
+</html>
