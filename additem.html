@@ -28,3 +28,50 @@
 		var firstaid = ["medicine", "bandages", "adhesive tape", "antiseptic" ,"cotton", "tweezers", "scissors", "tissues", "sunscreen"];
 		var miscellaneous = ["funds", "games", "mp3 player", "gps", "books", "radio"];
 		
+		function para(field, val) {
+			return "<p>" + "<strong>" + field + ": </strong>" + val + "</p>";
+		}
+	
+		function display() {
+			var text = "";
+			var len = itemsArray.length;
+			
+			for (i=0; i<len; i++) {
+				text += "<div class='listitem'>" + para("Category", itemsArray[i]['category']) + para("Name", itemsArray[i]['name']) + para("Quantity", itemsArray[i]['quantity']) + para("Comments", itemsArray[i]['comments']) + "</div>";
+			}
+			el('listbox').innerHTML = text;
+		}
+		
+		var update = function() {
+			var obj = { category:el('category').value, name:el('name').value, quantity:el('quantity').value, comments:el('comments').value };
+			var len = itemsArray.length;
+			var notAlreadyThere = true;
+			for (i=0; i<len; i++) {
+				if (obj['name'].toLowerCase() == itemsArray[i]['name'].toLowerCase() && obj['category'] == itemsArray[i]['category']) {
+					itemsArray[i]['quantity'] = obj['quantity'];
+					itemsArray[i]['comments'] = obj['comments'];
+					notAlreadyThere = false;
+				}
+			}
+			if (notAlreadyThere)
+				itemsArray.push(obj);
+			display();
+		}
+		
+		function validate() {
+			var targetArray;
+			var option;
+			var cat = el('category').value;
+			if (cat == "Shelter")
+				targetArray = shelter;
+			else if (cat == "Bedding")
+				targetArray = bedding;
+			else if (cat == "Cooking")
+				targetArray = cooking;
+			else if (cat == "Clothing")
+				targetArray = clothing;
+			else if (cat == "First Aid")
+				targetArray = firstaid;
+			else if (cat == "Miscellaneous")
+				targetArray = miscellaneous;
+			
