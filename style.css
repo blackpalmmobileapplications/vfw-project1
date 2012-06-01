@@ -1,0 +1,6 @@
+body { font-family:Arial; }
+fieldset {display:inline;}
+input, select {margin-bottom:15px;}
+.listitem { background:#EEE; border-bottom:1px solid grey; margin:5px 0; padding:10px; width:300px; }
+.listitem p { margin:4px 0; }
+a.button { font-size:13px; text-decoration:underline; cursor:pointer; margin-right:10px;}

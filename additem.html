@@ -3,98 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Add Item</title>
-	<style type="text/css">
-		body { font-family:Arial; }
-		fieldset {display:inline;}
-		input, select {margin-bottom:15px;}
-		.listitem { background:#EEE; border-bottom:1px solid grey; margin:5px 0; padding:10px; width:300px; }
-		.listitem p { margin:4px 0; }
-	</style>
-	<script type="text/javascript">
-		var itemsArray = [];
-		var el = function(arg) { return document.getElementById(arg); }
-		var shelter = [ "tent", "ground cloth", "ground tarp", "extra stakes", "shade", "shade poles", "shade rope", "shade stakes", "axe",
-					    "hammer", "mat", "dust pan", "Dust brush" ];
-		var bedding = [ "sleeping bag", "sheets", "blankets", "pillow", "air mattress", "sleeping pad", "cot", "tarp", "air pump", "repair kit for air mattress",
-						"utility bags for storage" ];
-        var cooking = [ "large water jug", "water bucket", "coolers", "ice", "thermos", "stove", "stove with fuel", "stove with propane", "matches",
-						"lighter", "charcoal", "firewood", "buddy burner", "oven", "tin can", "box oven", "campfire grill", "barbeque grill",
-						"fire starters", "newspapers", "tablecloth", "thumb tacks", "clips", "plates", "bowls", "paper plates", "paper bowls", "silverware",
-						"plastic silverware", "measuring cups", "aluminium foil", "paper towels", "trash bags", "dish soap", "cloth pins", "cooking oil",
-						"pam spray", "containers", "pot holders", "oven mitts", "pots", "frying pans", "pan lids", "soap", "tongs", "skewers", "grill forks",
-						"can opener", "bottle opener", "folding table", "dutch oven", "pie irons", "mugs", "paper cups", "mixing bowls", "cutting board",
-						"ziplock bags", "napkins", "dish pan", "dish rag", "towels", "scrub pad", "brillo", "seasonings", "sugar", "condiments", "potato peeler"];
-		var clothing = ["shoes", "boots", "jeans", "pants", "shirts", "belts", "t-shirts", "socks", "hat", "bandana", "sweatshirt", "underwear", "raincoat"];
-		var firstaid = ["medicine", "bandages", "adhesive tape", "antiseptic" ,"cotton", "tweezers", "scissors", "tissues", "sunscreen"];
-		var miscellaneous = ["funds", "games", "mp3 player", "gps", "books", "radio"];
-		
-		function para(field, val) {
-			return "<p>" + "<strong>" + field + ": </strong>" + val + "</p>";
-		}
-	
-		function display() {
-			var text = "";
-			var len = itemsArray.length;
-			
-			for (i=0; i<len; i++) {
-				text += "<div class='listitem'>" + para("Category", itemsArray[i]['category']) + para("Name", itemsArray[i]['name']) + para("Quantity", itemsArray[i]['quantity']) + para("Comments", itemsArray[i]['comments']) + "</div>";
-			}
-			el('listbox').innerHTML = text;
-		}
-		
-		var update = function() {
-			var obj = { category:el('category').value, name:el('name').value, quantity:el('quantity').value, comments:el('comments').value };
-			var len = itemsArray.length;
-			var notAlreadyThere = true;
-			for (i=0; i<len; i++) {
-				if (obj['name'].toLowerCase() == itemsArray[i]['name'].toLowerCase() && obj['category'] == itemsArray[i]['category']) {
-					itemsArray[i]['quantity'] = obj['quantity'];
-					itemsArray[i]['comments'] = obj['comments'];
-					notAlreadyThere = false;
-				}
-			}
-			if (notAlreadyThere)
-				itemsArray.push(obj);
-			display();
-		}
-		
-		function validate() {
-			var targetArray;
-			var option;
-			var cat = el('category').value;
-			if (cat == "Shelter")
-				targetArray = shelter;
-			else if (cat == "Bedding")
-				targetArray = bedding;
-			else if (cat == "Cooking")
-				targetArray = cooking;
-			else if (cat == "Clothing")
-				targetArray = clothing;
-			else if (cat == "First Aid")
-				targetArray = firstaid;
-			else if (cat == "Miscellaneous")
-				targetArray = miscellaneous;
-			
-			
-			if ( el('name').value == "" || el('quantity').value == "" || el('comments').value == "" )
-				alert('All fields are required!');
-			else if ( targetArray.indexOf(el('name').value.toLowerCase()) == -1 ) {
-				option = confirm("Err..the item you entered doesn't seem like one required for a camping trip. Add it anyway?");
-				if (option == true)
-					update();
-			}
-			else update();
-		}
-	</script>
+	<link rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="code.js"></script>
 </head>
 <body>
 	<header>
 		<h1>ListCheck</h1>
 		<p>This app enables you to make sure that you're taking every single item required on a camping check-list.</p>
 	</header>
-	<form action="#">
+	<form action="#" method="POST">
 		<fieldset>
-		<!-- Reqs:  fieldset & legend -->
 			<legend>Add Item</legend>
 			<label for="category">Select Cateogory</label>
 			<select name="category" id="category">
@@ -106,7 +24,9 @@
 				<option value="Miscellaneous">Miscellaneous</option>
 			</select><br />
 			<label for="name">Name: </label><input type="text" name="name" id="name" /><br />
-			<label for="quantity">Quantity </label><input type="range" name="quantity" id="quantity" min="1" max="10" value="1" /><br />
+			<label for="quantity">Quantity: </label><input type="range" name="quantity" id="quantity" min="1" max="10" value="1" /><br />
+			<label for="date">Purchase By: </label><input type="date" name="date" id="date" /><br />
+			<label for="important">Important? </label><input type="checkbox" name="important" id="important" /><br />
 			<label for="comments">Comments: </label><textarea name="comments" id="comments" cols="30" rows="10"></textarea><br />
 			<input type="button" value="Add Item!" onclick="validate();" />
 		</fieldset>
@@ -115,6 +35,7 @@
 	<div id="listbox">
 		
 	</div>
+	<a class="button" onclick="clearlist();">Clear Local Storage</a>
 	
 </body>
 </html>
