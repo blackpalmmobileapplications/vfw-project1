@@ -1,3 +1,7 @@
+/* Carmen Johnson
+   Deliverable 1
+   VFW 05/31/2012
+   */
 var itemsArray = [];						// GLOBAL VARIABLE
 var items = 0;								// GLOBAL VARIABLE
 var el = function(arg) { 					// METHOD FUNCTION
